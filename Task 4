@@ -1,0 +1,100 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+struct Task {
+    std::string description;
+    bool completed;
+};
+
+class ToDoList {
+private:
+    std::vector<Task> tasks;
+
+public:
+    void addTask(const std::string& description) {
+        Task newTask;
+        newTask.description = description;
+        newTask.completed = false;
+        tasks.push_back(newTask);
+        std::cout << "Task added: " << description << std::endl;
+    }
+
+    void viewTasks() {
+        if (tasks.empty()) {
+            std::cout << "No tasks in the list." << std::endl;
+            return;
+        }
+
+        std::cout << "Tasks:" << std::endl;
+        for (size_t i = 0; i < tasks.size(); ++i) {
+            std::cout << i + 1 << ". ";
+            if (tasks[i].completed) {
+                std::cout << "[X] ";
+            } else {
+                std::cout << "[ ] ";
+            }
+            std::cout << tasks[i].description << std::endl;
+        }
+    }
+
+    void completeTask(size_t index) {
+        if (index < tasks.size()) {
+            tasks[index].completed = true;
+            std::cout << "Task marked as completed: " << tasks[index].description << std::endl;
+        } else {
+            std::cout << "Invalid task index." << std::endl;
+        }
+    }
+
+    void deleteTask(size_t index) {
+        if (index < tasks.size()) {
+            std::cout << "Task deleted: " << tasks[index].description << std::endl;
+            tasks.erase(tasks.begin() + index);
+        } else {
+            std::cout << "Invalid task index." << std::endl;
+        }
+    }
+};
+
+int main() {
+    ToDoList todoList;
+
+    while (true) {
+        std::cout << "Options:" << std::endl;
+        std::cout << "1. Add Task" << std::endl;
+        std::cout << "2. View Tasks" << std::endl;
+        std::cout << "3. Complete Task" << std::endl;
+        std::cout << "4. Delete Task" << std::endl;
+        std::cout << "5. Quit" << std::endl;
+
+        int choice;
+        std::cin >> choice;
+
+        if (choice == 1) {
+            std::cout << "Enter task description: ";
+            std::string description;
+            std::cin.ignore(); // Clear newline character
+            std::getline(std::cin, description);
+            todoList.addTask(description);
+        } else if (choice == 2) {
+            todoList.viewTasks();
+        } else if (choice == 3) {
+            std::cout << "Enter task index to mark as completed: ";
+            size_t index;
+            std::cin >> index;
+            todoList.completeTask(index - 1);
+        } else if (choice == 4) {
+            std::cout << "Enter task index to delete: ";
+            size_t index;
+            std::cin >> index;
+            todoList.deleteTask(index - 1);
+        } else if (choice == 5) {
+            break;
+        } else {
+            std::cout << "Invalid choice. Please select a valid option." << std::endl;
+        }
+    }
+
+    return 0;
+}
