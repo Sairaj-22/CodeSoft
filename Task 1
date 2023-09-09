@@ -1,0 +1,31 @@
+# CodeSoft
+Tasks/Projects | CodSoft Internship Program
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+	int Entre_num, Guess_num, tries = 0;
+	srand(time(0)); 
+	Entre_num = rand() % 500 + 1; 
+	cout << "NUMBER GUESSING GAME\n\n";
+
+	do
+	{
+		cout << "Enter a Guess_num between 1 and 500 : ";
+		cin >> Guess_num;
+		tries++;
+
+		if (Guess_num > Entre_num)
+			cout << "Too high!\n\n";
+		else if (Guess_num < Entre_num)
+			cout << "Too low!\n\n";
+		else
+			cout << "\nCorrect! You got it in " << tries << " guesses!\n";
+	} while (Guess_num != Entre_num);
+
+	return 0;
+}
